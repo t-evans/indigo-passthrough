@@ -19,10 +19,13 @@ class IndigoView(View):
         response = requests.get(url, auth=HTTPDigestAuth(user_name, password))
         return HttpResponse(response.content)
 
+    def post(self, request, **kwargs):
+        return self.put(request, **kwargs);
+
     def put(self, request, **kwargs):
         url = self.build_url(request)
         user_name = settings.INDIGO_USERNAME
         password = settings.INDIGO_PASSWORD
 
-        response = requests.post(url, request.POST, auth=HTTPDigestAuth(user_name, password))
+        response = requests.put(url, request.POST, auth=HTTPDigestAuth(user_name, password))
         return HttpResponse(response.content)
