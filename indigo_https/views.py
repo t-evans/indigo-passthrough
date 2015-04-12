@@ -1,3 +1,4 @@
+import json
 import requests
 from django.http import HttpResponse
 from django.views.generic import View
@@ -5,10 +6,29 @@ from django.conf import settings
 from requests.auth import HTTPDigestAuth
 
 
+try:
+    with open('path_aliases.json') as json_data:
+        _path_aliases = json.load(json_data)
+except:
+    _path_aliases = {}
+
+
 class IndigoView(View):
 
-    def build_url(self, requset):
-        url = 'http://%s%s' % (settings.INTERNAL_INDIGO_HOST, requset.get_full_path())
+    def get_alias(self, path):
+        if path.startswith('/'):
+            path = path[1:]
+        if path.endswith('/'):
+            path = path[:-1]
+        alias = _path_aliases.get(path, None)
+        return alias
+
+    def build_url(self, request):
+        full_path = request.get_full_path()
+        path_alias = self.get_alias(request.path)
+        if path_alias is not None:
+            full_path = full_path.replace(request.path, path_alias, 1)
+        url = 'http://%s%s' % (settings.INTERNAL_INDIGO_HOST, full_path)
         return url
 
     def get(self, request, **kwargs):

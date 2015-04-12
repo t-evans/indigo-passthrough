@@ -1,0 +1,9 @@
+{
+  "garage": "/devices/Garage%20Door%20Opener%252FSensor/",
+  "game-dimmer": "/devices/Basement%20Gameroom%20Dimmer/",
+  "game-fluor": "/devices/Basement%20Gameroom%20Fluorescent/",
+  "media-dimmer": "/devices/Basement%20Media%20Dimmer/",
+  "media-fluor": "/devices/Basement%20Media%20Fluorescent",
+  "dining-dimmer": "/devices/Dining%20Dimmer/"
+
+}
